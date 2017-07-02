@@ -6,6 +6,16 @@ import org.junit.Test;
 
 public class TrieTest {
 
+    private void assertIsLeaf(Trie trie, String path) {
+        TrieNode currentNode = trie.root;
+        for (int i = 0; i < path.length(); i++) {
+            int position = path.charAt(i) - 'a';
+            currentNode = currentNode.children[position];
+            assertNotNull(currentNode);
+        }
+        assertTrue(currentNode.isLeaf);
+    }
+
     @Test
     public void testAddWord() {
         Trie trie = new Trie();
@@ -37,8 +47,21 @@ public class TrieTest {
         assertNull(trie.root.children['y' - 'a']);
         assertNull(trie.root.children['z' - 'a']);
 
-        TrieNode leaf = trie.root.children['h' - 'a'].children['e' - 'a'].children['l' - 'a'].children['l' - 'a'].children['o' - 'a'];
-        assertNotNull(leaf);
-        assertTrue(leaf.isLeaf);
+        assertIsLeaf(trie, "hello");
+    }
+
+    @Test
+    public void testAddMultipleWords() {
+        Trie trie = new Trie();
+        trie.addWord("Fuss");
+        trie.addWord("Fussball");
+        trie.addWord("Fussboden");
+        trie.addWord("Fussbodenheizung");
+        trie.addWord("Boden");
+        assertIsLeaf(trie, "fuss");
+        assertIsLeaf(trie, "fussball");
+        assertIsLeaf(trie, "fussboden");
+        assertIsLeaf(trie, "fussbodenheizung");
+        assertIsLeaf(trie, "boden");
     }
 }
