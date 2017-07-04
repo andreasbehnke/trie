@@ -14,4 +14,13 @@ public class Token {
         this.end = end;
         this.value = value;
     }
+
+    @Override
+    public String toString() {
+        return "Token{" +
+                "start=" + start +
+                ", end=" + end +
+                ", value=" + value +
+                '}';
+    }
 }
