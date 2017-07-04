@@ -9,7 +9,9 @@ public class Trie {
 
     final TrieNode root;
 
-    final TrieCharacterRange characterRange;
+    private final TrieCharacterRange characterRange;
+
+    private int wordCount = 0;
 
     public Trie() {
         this(new TrieCharacterRange() {});
@@ -41,6 +43,7 @@ public class Trie {
             }
             currentNode = nextNode;
         }
+        wordCount++;
         return true;
     }
 
@@ -65,6 +68,10 @@ public class Trie {
         } else {
             return new Token(start, lastLeafNote + 1 , input.subSequence(start, lastLeafNote + 1));
         }
+    }
+
+    public int getWordCount() {
+        return wordCount;
     }
 
     public static Trie createFromWordList(String wordlistFile, Charset charset) throws IOException {

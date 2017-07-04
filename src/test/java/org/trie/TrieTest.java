@@ -63,6 +63,7 @@ public class TrieTest {
     @Test
     public void testAddMultipleWords() {
         Trie trie = createTrie();
+        assertEquals(5, trie.getWordCount());
         assertIsLeaf(trie, "fuss");
         assertIsLeaf(trie, "fussball");
         assertIsLeaf(trie, "fussboden");
