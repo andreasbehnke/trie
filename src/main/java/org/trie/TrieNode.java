@@ -2,7 +2,9 @@ package org.trie;
 
 public class TrieNode {
 
-    final TrieNode[] children = new TrieNode[26];
+    public static final int MAX_POSITION = 26;
+
+    final TrieNode[] children = new TrieNode[MAX_POSITION];
 
     boolean isLeaf = false;
 

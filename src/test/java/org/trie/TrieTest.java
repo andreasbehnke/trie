@@ -64,4 +64,58 @@ public class TrieTest {
         assertIsLeaf(trie, "fussbodenheizung");
         assertIsLeaf(trie, "boden");
     }
+
+    @Test
+    public void testSearch() {
+        Trie trie = new Trie();
+        trie.addWord("Fuss");
+        trie.addWord("Fussball");
+        trie.addWord("Fussboden");
+        trie.addWord("Fussbodenheizung");
+        trie.addWord("Boden");
+        String input = "bodenblablabla";
+        assertEquals("boden", trie.search(input, 0).value);
+    }
+
+    @Test
+    public void testSearchNotFound() {
+        Trie trie = new Trie();
+        trie.addWord("Fuss");
+        trie.addWord("Fussball");
+        trie.addWord("Fussboden");
+        trie.addWord("Fussbodenheizung");
+        trie.addWord("Boden");
+        String input = "haus";
+        assertEquals(null, trie.search(input, 0));
+    }
+
+    @Test
+    public void testSearchFindLongestPrefix() {
+        Trie trie = new Trie();
+        trie.addWord("Fuss");
+        trie.addWord("Fussball");
+        trie.addWord("Fussboden");
+        trie.addWord("Fussbodenheizung");
+        trie.addWord("Boden");
+        String input = "fussbodenheizungbodenfussboden";
+        Token token = trie.search(input, 0);
+        assertEquals("fussbodenheizung", token.value);
+        token = trie.search(input, token.end);
+        assertEquals("boden", token.value);
+        token = trie.search(input, token.end);
+        assertEquals("fussboden", token.value);
+    }
+
+    @Test
+    public void testSearchIllegalCharacter() {
+        Trie trie = new Trie();
+        trie.addWord("Fuss");
+        trie.addWord("Fussball");
+        trie.addWord("Fussboden");
+        trie.addWord("Fussbodenheizung");
+        trie.addWord("Boden");
+        String input = "äöü!";
+        Token token = trie.search(input, 0);
+        assertEquals(null, token);
+    }
 }

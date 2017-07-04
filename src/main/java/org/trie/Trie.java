@@ -23,4 +23,27 @@ public class Trie {
             currentNode = nextNode;
         }
     }
+
+    public Token search(CharSequence input, int start) {
+        TrieNode currentNode = root;
+        int lastLeafNote = -1;
+        for (int i = start; i < input.length(); i++) {
+            int position = input.charAt(i) - 'a';
+            if (position < 0 || position >= TrieNode.MAX_POSITION) {
+                break;
+            }
+            currentNode = currentNode.children[position];
+            if (currentNode == null) {
+                break;
+            }
+            if (currentNode.isLeaf) {
+                lastLeafNote = i;
+            }
+        }
+        if (lastLeafNote == -1) {
+            return null;
+        } else {
+            return new Token(start, lastLeafNote + 1 , input.subSequence(start, lastLeafNote + 1));
+        }
+    }
 }
