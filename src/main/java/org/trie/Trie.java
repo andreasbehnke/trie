@@ -1,5 +1,10 @@
 package org.trie;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 public class Trie {
 
     final TrieNode root = new TrieNode('_');
@@ -45,5 +50,11 @@ public class Trie {
         } else {
             return new Token(start, lastLeafNote + 1 , input.subSequence(start, lastLeafNote + 1));
         }
+    }
+
+    public static Trie createFromWordList(String wordlistFile, Charset charset) throws IOException {
+        Trie trie = new Trie();
+        Files.lines(Paths.get(wordlistFile), charset).forEach(trie::addWord);
+        return trie;
     }
 }
