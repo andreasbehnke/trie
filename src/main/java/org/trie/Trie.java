@@ -7,7 +7,18 @@ import java.nio.file.Paths;
 
 public class Trie {
 
-    final TrieNode root = new TrieNode('_');
+    final TrieNode root;
+
+    final TrieCharacterRange characterRange;
+
+    public Trie() {
+        this(new TrieCharacterRange() {});
+    }
+
+    public Trie(TrieCharacterRange characterRange) {
+        this.characterRange = characterRange;
+        this.root = new TrieNode('_', this.characterRange.size());
+    }
 
     public void addWord(String word) {
         String lowercase = word.toLowerCase();
@@ -16,10 +27,10 @@ public class Trie {
         int length = lowercase.length();
         for (int i = 0; i < length; i++) {
             char character = lowercase.charAt(i);
-            int position =  character - 'a';
+            int position =  characterRange.charToPosition(character);
             nextNode = currentNode.children[position];
             if (nextNode == null) {
-                nextNode = new TrieNode(character);
+                nextNode = new TrieNode(character, characterRange.size());
                 currentNode.children[position] = nextNode;
             }
             if (i == length - 1) {
@@ -34,7 +45,7 @@ public class Trie {
         int lastLeafNote = -1;
         for (int i = start; i < input.length(); i++) {
             int position = input.charAt(i) - 'a';
-            if (position < 0 || position >= TrieNode.MAX_POSITION) {
+            if (position < 0 || position >= characterRange.size()) {
                 break;
             }
             currentNode = currentNode.children[position];

@@ -1,16 +1,15 @@
 package org.trie;
 
-public class TrieNode {
+class TrieNode {
 
-    public static final int MAX_POSITION = 26;
-
-    final TrieNode[] children = new TrieNode[MAX_POSITION];
+    final TrieNode[] children;
 
     boolean isLeaf = false;
 
     final char value;
 
-    public TrieNode(char value) {
+    TrieNode(char value, int maxPosition) {
         this.value = value;
+        this.children = new TrieNode[maxPosition];
     }
 }
