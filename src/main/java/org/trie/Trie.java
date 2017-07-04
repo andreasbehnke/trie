@@ -71,9 +71,15 @@ public class Trie {
         return createFromWordList(wordlistFile, charset, new TrieCharacterRange() {});
     }
 
+    private static void addWord(Trie trie, String word) {
+        if (!trie.addWord(word)) {
+            System.out.println("Could not add word to Trie: \"" + word + "\"");
+        }
+    }
+
     public static Trie createFromWordList(String wordlistFile, Charset charset, TrieCharacterRange characterRange) throws IOException {
         Trie trie = new Trie(characterRange);
-        Files.lines(Paths.get(wordlistFile), charset).forEach(trie::addWord);
+        Files.lines(Paths.get(wordlistFile), charset).forEach(s -> addWord(trie, s));
         return trie;
     }
 
