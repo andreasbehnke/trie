@@ -6,6 +6,10 @@ public interface TrieCharacterRange {
         return 26;
     }
 
+    default String prepare(String input) {
+        return input.trim().toLowerCase();
+    }
+
     default int charToPosition(char c) {
         return  c - 'a';
     }

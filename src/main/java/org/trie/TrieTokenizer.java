@@ -17,14 +17,13 @@ public class TrieTokenizer implements Spliterator<Token> {
 
     public TrieTokenizer(Trie trie, CharSequence input) {
         this.trie = trie;
-        this.input = input;
+        this.input = trie.prepareInput(input);
         this.length = input.length();
     }
 
     public Stream<Token> stream() {
         return StreamSupport.stream(this, false);
     }
-
 
     public boolean tryAdvance(Consumer<? super Token> consumer) {
         Token token = null;

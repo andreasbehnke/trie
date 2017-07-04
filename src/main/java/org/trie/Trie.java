@@ -23,7 +23,7 @@ public class Trie {
     }
 
     public boolean addWord(String word) {
-        String lowercase = word.trim().toLowerCase();
+        String lowercase = characterRange.prepare(word);
         TrieNode currentNode = root;
         TrieNode nextNode = null;
         int length = lowercase.length();
@@ -45,6 +45,10 @@ public class Trie {
         }
         wordCount++;
         return true;
+    }
+
+    public CharSequence prepareInput(CharSequence input) {
+        return characterRange.prepare(input.toString());
     }
 
     public Token search(CharSequence input, int start) {
