@@ -20,14 +20,17 @@ public class Trie {
         this.root = new TrieNode('_', this.characterRange.size());
     }
 
-    public void addWord(String word) {
-        String lowercase = word.toLowerCase();
+    public boolean addWord(String word) {
+        String lowercase = word.trim().toLowerCase();
         TrieNode currentNode = root;
         TrieNode nextNode = null;
         int length = lowercase.length();
         for (int i = 0; i < length; i++) {
             char character = lowercase.charAt(i);
             int position =  characterRange.charToPosition(character);
+            if (position < 0 || position > characterRange.size()) {
+                return false;
+            }
             nextNode = currentNode.children[position];
             if (nextNode == null) {
                 nextNode = new TrieNode(character, characterRange.size());
@@ -38,6 +41,7 @@ public class Trie {
             }
             currentNode = nextNode;
         }
+        return true;
     }
 
     public Token search(CharSequence input, int start) {
@@ -64,8 +68,13 @@ public class Trie {
     }
 
     public static Trie createFromWordList(String wordlistFile, Charset charset) throws IOException {
-        Trie trie = new Trie();
+        return createFromWordList(wordlistFile, charset, new TrieCharacterRange() {});
+    }
+
+    public static Trie createFromWordList(String wordlistFile, Charset charset, TrieCharacterRange characterRange) throws IOException {
+        Trie trie = new Trie(characterRange);
         Files.lines(Paths.get(wordlistFile), charset).forEach(trie::addWord);
         return trie;
     }
+
 }

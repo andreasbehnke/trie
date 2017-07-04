@@ -71,6 +71,15 @@ public class TrieTest {
     }
 
     @Test
+    public void testAddIllegalCharacters() {
+        Trie trie = new Trie();
+        assertTrue(trie.addWord("abc"));
+        assertFalse(trie.addWord("!$&"));
+    }
+
+
+
+    @Test
     public void testSearch() {
         Trie trie = createTrie();
         String input = "bodenblablabla";
