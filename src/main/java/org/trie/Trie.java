@@ -51,7 +51,7 @@ public class Trie {
         TrieNode currentNode = root;
         int lastLeafNote = -1;
         for (int i = start; i < input.length(); i++) {
-            int position = input.charAt(i) - 'a';
+            int position = characterRange.charToPosition(input.charAt(i));
             if (position < 0 || position >= characterRange.size()) {
                 break;
             }
