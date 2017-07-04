@@ -18,7 +18,7 @@ public class TrieTokenizer implements Spliterator<Token> {
     public TrieTokenizer(Trie trie, CharSequence input) {
         this.trie = trie;
         this.input = trie.prepareInput(input);
-        this.length = input.length();
+        this.length = this.input.length();
     }
 
     public Stream<Token> stream() {
