@@ -6,6 +6,16 @@ import org.junit.Test;
 
 public class TrieTest {
 
+    private Trie createTrie() {
+        Trie trie = new Trie();
+        trie.addWord("Fuss");
+        trie.addWord("Fussball");
+        trie.addWord("Fussboden");
+        trie.addWord("Fussbodenheizung");
+        trie.addWord("Boden");
+        return trie;
+    }
+
     private void assertIsLeaf(Trie trie, String path) {
         TrieNode currentNode = trie.root;
         for (int i = 0; i < path.length(); i++) {
@@ -52,12 +62,7 @@ public class TrieTest {
 
     @Test
     public void testAddMultipleWords() {
-        Trie trie = new Trie();
-        trie.addWord("Fuss");
-        trie.addWord("Fussball");
-        trie.addWord("Fussboden");
-        trie.addWord("Fussbodenheizung");
-        trie.addWord("Boden");
+        Trie trie = createTrie();
         assertIsLeaf(trie, "fuss");
         assertIsLeaf(trie, "fussball");
         assertIsLeaf(trie, "fussboden");
@@ -67,36 +72,21 @@ public class TrieTest {
 
     @Test
     public void testSearch() {
-        Trie trie = new Trie();
-        trie.addWord("Fuss");
-        trie.addWord("Fussball");
-        trie.addWord("Fussboden");
-        trie.addWord("Fussbodenheizung");
-        trie.addWord("Boden");
+        Trie trie = createTrie();
         String input = "bodenblablabla";
         assertEquals("boden", trie.search(input, 0).value);
     }
 
     @Test
     public void testSearchNotFound() {
-        Trie trie = new Trie();
-        trie.addWord("Fuss");
-        trie.addWord("Fussball");
-        trie.addWord("Fussboden");
-        trie.addWord("Fussbodenheizung");
-        trie.addWord("Boden");
+        Trie trie = createTrie();
         String input = "haus";
         assertEquals(null, trie.search(input, 0));
     }
 
     @Test
     public void testSearchFindLongestPrefix() {
-        Trie trie = new Trie();
-        trie.addWord("Fuss");
-        trie.addWord("Fussball");
-        trie.addWord("Fussboden");
-        trie.addWord("Fussbodenheizung");
-        trie.addWord("Boden");
+        Trie trie = createTrie();
         String input = "fussbodenheizungbodenfussboden";
         Token token = trie.search(input, 0);
         assertEquals("fussbodenheizung", token.value);
@@ -108,12 +98,7 @@ public class TrieTest {
 
     @Test
     public void testSearchIllegalCharacter() {
-        Trie trie = new Trie();
-        trie.addWord("Fuss");
-        trie.addWord("Fussball");
-        trie.addWord("Fussboden");
-        trie.addWord("Fussbodenheizung");
-        trie.addWord("Boden");
+        Trie trie = createTrie();
         String input = "äöü!";
         Token token = trie.search(input, 0);
         assertEquals(null, token);
